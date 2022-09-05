@@ -51,9 +51,10 @@ fn main() -> std::io::Result<()> {
         targetfile += extension; // append the correct file extension.
 
         if fullpath.exists() {
+            // println!("Deleting {}", fullpath.display());
             remove_file(&line)?; // remove the file if it already exists.
         }
-        symlink_file(targetfile, line)?; // link the real filename to the sampledocument.
+        symlink_file(targetfile, line).ok(); // link the real filename to the sampledocument.
         bar.inc(1);
     }
     bar.finish();
