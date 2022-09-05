@@ -40,7 +40,6 @@ fn main() -> std::io::Result<()> {
         let basepath = fullpath.parent().unwrap().to_str().unwrap();
         // let _filename = fullpath.file_name().unwrap().to_str().unwrap();
         let extension = fullpath.extension().unwrap().to_str().unwrap();
-        // dbg!(basepath, filename, extension);
 
         // So we know the path, the filename and the extension we're dealing with.
 
@@ -51,7 +50,9 @@ fn main() -> std::io::Result<()> {
         let mut targetfile = r#"J:\\SampleDocs\SampleDocument."#.to_owned();
         targetfile += extension; // append the correct file extension.
 
-        remove_file(&line).ok(); // remove the file and don't worry it it fails.
+        if fullpath.exists() {
+            remove_file(&line)?; // remove the file if it already exists.
+        }
         symlink_file(targetfile, line)?; // link the real filename to the sampledocument.
         bar.inc(1);
     }
