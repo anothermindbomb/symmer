@@ -16,6 +16,7 @@ fn main() -> std::io::Result<()> {
 
     // Determine how many lines we're going to process by simply counting them all. We don't store them, as
     // there may be many millions - 15 GB text files are not unheard of.
+    // There must be a better way to do this...
     for _ in fakereader.lines() {
         line_cnt += 1;
     }
@@ -38,7 +39,6 @@ fn main() -> std::io::Result<()> {
         let line = line.unwrap();
         let fullpath = Path::new(&line);
         let basepath = fullpath.parent().unwrap().to_str().unwrap();
-        // let _filename = fullpath.file_name().unwrap().to_str().unwrap();
         let extension = fullpath.extension().unwrap().to_str().unwrap();
 
         // So we know the path, the filename and the extension we're dealing with.
