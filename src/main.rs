@@ -5,18 +5,21 @@ use std::io::prelude::*;
 use std::io::BufReader;
 use std::os::windows::fs::symlink_file;
 use std::path::Path;
+use std::env;
 
 fn main() -> std::io::Result<()> {
     // Some code to experiment with creating symlinks.
 
-    let driverfilename = r"C:\Users\Steve\Desktop\Swordfish\swordfishlivedocs.txt";
+    let args: Vec<String> = env::args().collect();
+    let driverfilename: &str  = &args[1]; // We expect one argument - the name of the driver file.
+    // let driverfilename = r"C:\Users\Steve\Desktop\Swordfish\swordfishlivedocs.txt";
     let driverhandle = File::open(driverfilename)?;
     let fakereader = BufReader::new(&driverhandle);
     let mut line_cnt = 0;
 
     // Determine how many lines we're going to process by simply counting them all. We don't store them, as
     // there may be many millions - 15 GB text files are not unheard of.
-    // There must be a better way to do this...
+    // There *must* be a better way to do this, but I've no idea what it is!
     for _ in fakereader.lines() {
         line_cnt += 1;
     }
@@ -31,8 +34,8 @@ fn main() -> std::io::Result<()> {
 
     // We use a file of legitimate filenames and break them up into path and filename, then use the file type to determine what
     // sample we're going to symlink to.
-    let driverfilename = r"C:\Users\Steve\Desktop\Swordfish\swordfishlivedocs.txt";
-    let driverhandle = File::open(driverfilename)?;
+    // let driverfilename = r"C:\Users\Steve\Desktop\Swordfish\swordfishlivedocs.txt";
+    // let driverhandle = File::open(driverfilename)?;
     let reader = BufReader::new(&driverhandle);
 
     for line in reader.lines() {
@@ -42,7 +45,6 @@ fn main() -> std::io::Result<()> {
         let extension = fullpath.extension().unwrap().to_str().unwrap();
 
         // So we know the path, the filename and the extension we're dealing with.
-
         // Create the path if it doesn't already exist.
         create_dir_all(&basepath)?;
 
