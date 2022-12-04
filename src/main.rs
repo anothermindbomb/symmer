@@ -1,18 +1,18 @@
 use indicatif::{ProgressBar, ProgressStyle};
+use std::env;
 use std::fs::File;
 use std::fs::{create_dir_all, remove_file};
 use std::io::prelude::*;
 use std::io::BufReader;
 use std::os::windows::fs::symlink_file;
 use std::path::Path;
-use std::env;
 
 fn main() -> std::io::Result<()> {
     // Some code to experiment with creating symlinks.
 
     let args: Vec<String> = env::args().collect();
-    let driverfilename: &str  = &args[1]; // We expect one argument - the name of the driver file.
-    // let driverfilename = r"C:\Users\Steve\Desktop\Swordfish\swordfishlivedocs.txt";
+    let driverfilename: &str = &args[1]; // We expect one argument - the full name of the driver file.
+    
     let driverhandle = File::open(driverfilename)?;
     let fakereader = BufReader::new(&driverhandle);
     let mut line_cnt = 0;
@@ -46,10 +46,10 @@ fn main() -> std::io::Result<()> {
 
         // So we know the path, the filename and the extension we're dealing with.
         // Create the path if it doesn't already exist.
-        create_dir_all(&basepath)?;
+        create_dir_all(basepath)?;
 
         // Build our target filename up. Raw string to help with the slashes, and we need to own the result.
-        let mut targetfile = r#"J:\\SampleDocs\SampleDocument."#.to_owned();
+        let mut targetfile = r#"T:\\SampleDocs\SampleDocument."#.to_owned();
         targetfile += extension; // append the correct file extension.
 
         if fullpath.exists() {
