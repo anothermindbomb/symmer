@@ -9,7 +9,7 @@ edition = "2021"
 indicatif = "0.17.0"
 
 [profile.release]
-strip = true # sutomatically strip debugging symbols from the binary.
+strip = true # automatically strip debugging symbols from the binary.
 opt-level = "s" # optimise for size.
 lto = true # Enable link time optimisation.
 codegen-units = 1 # Maximise size reduction.

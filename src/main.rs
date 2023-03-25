@@ -12,14 +12,14 @@ fn main() -> std::io::Result<()> {
 
     let args: Vec<String> = env::args().collect();
     let driverfilename: &str = &args[1]; // We expect one argument - the full name of the driver file.
-    
+
     let driverhandle = File::open(driverfilename)?;
     let fakereader = BufReader::new(&driverhandle);
     let mut line_cnt = 0;
 
     // Determine how many lines we're going to process by simply counting them all. We don't store them, as
     // there may be many millions - 15 GB text files are not unheard of.
-    // There *must* be a better way to do this, but I've no idea what it is!
+    // There *must* be a better way to do this.
     for _ in fakereader.lines() {
         line_cnt += 1;
     }
