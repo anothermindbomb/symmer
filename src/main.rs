@@ -24,8 +24,8 @@ fn main() -> std::io::Result<()> {
         line_cnt += 1;
     }
 
-    let bar = ProgressBar::new(line_cnt);
-    bar.set_style(
+    let progress_bar = ProgressBar::new(line_cnt);
+    progress_bar.set_style(
         ProgressStyle::with_template(
             "[{elapsed_precise}] {per_sec} {wide_bar} {pos:>7}/{len:7} ETA: {eta} {msg}",
         )
@@ -57,8 +57,8 @@ fn main() -> std::io::Result<()> {
             remove_file(&line)?; // remove the file if it already exists.
         }
         symlink_file(targetfile, line).ok(); // link the real filename to the sampledocument.
-        bar.inc(1);
+        progress_bar.inc(1);
     }
-    bar.finish();
+    progress_bar.finish();
     Ok(())
 }
